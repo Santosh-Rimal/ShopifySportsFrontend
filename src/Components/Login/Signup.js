@@ -8,6 +8,8 @@ const Register = ({ setEmail }) => {
   const [datas, setDatas] = useState({
     name: '',
     email: '',
+    phone: '',
+    address: '',
     password: '',
     confirmPassword: ''
   });
@@ -22,6 +24,8 @@ const Register = ({ setEmail }) => {
   const [errors, setErrors] = useState({
     name: '',
     email: '',
+    phone: '',
+    address: '',
     password: '',
     confirmPassword: ''
   });
@@ -44,6 +48,12 @@ const Register = ({ setEmail }) => {
     if (!datas.email.trim()) {
       err.email = "Email is required";
     }
+    if (!datas.phone.trim()) {
+      err.phone = "Phone number is required";
+    }
+    if (!datas.address.trim()) {
+      err.address = "Address is required";
+    }
     if (!datas.password.trim()) {
       err.password = "Password is required";
     }
@@ -60,6 +70,8 @@ const Register = ({ setEmail }) => {
         body: JSON.stringify({
           name: datas.name,
           email: datas.email,
+          phone: datas.phone,
+          address: datas.address,
           password: datas.password,
         }),
       })
@@ -107,6 +119,28 @@ const Register = ({ setEmail }) => {
           className="p-2.5 m-2.5 rounded-lg border-2 w-full"
         />
         {errors.email && <p className="text-red-500 text-center">{errors.email}</p>}
+
+        <label className='px-2.5'>Phone</label>
+        <input
+          type="text"
+          name="phone"
+          value={datas.phone}
+          onChange={handleChange}
+          placeholder="Phone"
+          className="p-2.5 m-2.5 rounded-lg border-2 w-full"
+        />
+        {errors.phone && <p className="text-red-500 text-center">{errors.phone}</p>}
+
+        <label className='px-2.5'>Address</label>
+        <input
+          type="text"
+          name="address"
+          value={datas.address}
+          onChange={handleChange}
+          placeholder="Address"
+          className="p-2.5 m-2.5 rounded-lg border-2 w-full"
+        />
+        {errors.address && <p className="text-red-500 text-center">{errors.address}</p>}
 
         <div className="relative">
           <label className='p-2.5'>Password</label>

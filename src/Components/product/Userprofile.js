@@ -6,30 +6,72 @@ import { BiCog } from 'react-icons/bi';
 
 const UserProfile = () => {
   const [user, setUser] = useState({
-    name: 'John Doe',
-    email: 'johndoe@example.com',
-    profilePicture: 'https://via.placeholder.com/150',
-    address: '123 Main St, Anytown, USA',
-    phone: '+1 234 567 890',
+    name: '',
+    email: '',
+    profilePicture: '',
+    address: '',
+    phone: '',
   });
 
   const [orderHistory, setOrderHistory] = useState([]);
 
   useEffect(() => {
-  const fetchOrderHistory = async () => {
-    // Fetch the user ID from localStorage
-    const userId = localStorage.getItem('userId');
-    
-    if (userId) {
-      const response = await fetch(`http://127.0.0.1:8000/api/getOrder/${userId}`);
-      const data = await response.json();
-      setOrderHistory(data.data || []);  // Make sure we're accessing the correct part of the data
-    }
-  };
+    const fetchUserData = async () => {
+      // Get the token from localStorage
+      const token = localStorage.getItem('token');
+      
+      if (token) {
+        try {
+          const response = await fetch('http://127.0.0.1:8000/api/user', {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          });
 
-  fetchOrderHistory();
-}, []);
+          if (response.ok) {
+            const data = await response.json();
+            setUser({
+              name: data.name,  // Assuming 'name' is the field returned from the API
+              email: data.email,  // Assuming 'email' is returned
+              profilePicture: data.profilePicture,  // Assuming 'profilePicture' field exists
+              address: data.address,  // Assuming 'address' is returned
+              phone: data.phone,  // Assuming 'phone' is returned
+            });
+          } else {
+            console.log('Failed to fetch user data');
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      }
+    };
 
+    const fetchOrderHistory = async () => {
+      const userId = localStorage.getItem('userId');
+      
+      if (userId) {
+        try {
+          const response = await fetch(`http://127.0.0.1:8000/api/getOrder/${userId}`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`,  // Attach the token
+              'Content-Type': 'application/json',
+            },
+          });
+          
+          const data = await response.json();
+          setOrderHistory(data.data || []);
+        } catch (error) {
+          console.error('Error fetching order history:', error);
+        }
+      }
+    };
+
+    fetchUserData();
+    fetchOrderHistory();
+  }, []);
 
   return (
     <div className="container mx-auto">
@@ -39,9 +81,8 @@ const UserProfile = () => {
         <Link to='/userprofile' className="hover:text-blue-600 font-bold">Profile</Link>
       </div>
       <div className="bg-white shadow-xl rounded-lg p-8 flex flex-col items-center">
-        {/* Profile Picture and Details */}
         <img 
-          src={user.profilePicture} 
+          src={user.profilePicture || 'https://via.placeholder.com/150'}  // Fallback image
           alt={`${user.name}'s profile`} 
           className="w-32 h-32 rounded-full mb-4 shadow-lg"
         />
@@ -52,24 +93,16 @@ const UserProfile = () => {
           <p className="text-gray-800"><strong>Phone:</strong> {user.phone}</p>
         </div>
 
-        {/* Profile Actions */}
         <div className="justify-around mb-8">
-          <Link 
-            to="/editprofile" 
-            className="text-primary flex items-center gap-2 hover:text-secondary transition duration-300"
-          >
+          <Link to="/editprofile" className="text-primary flex items-center gap-2 hover:text-secondary transition duration-300">
             <FaUserEdit /> Edit Profile
           </Link>
-    
-          <Link 
-            to="/setting" 
-            className="text-primary flex items-center gap-2 hover:text-secondary transition duration-300"
-          >
+
+          <Link to="/setting" className="text-primary flex items-center gap-2 hover:text-secondary transition duration-300">
             <BiCog /> Settings
           </Link>
         </div>
 
-        {/* Order History Section */}
         <div className="w-full">
           <h3 className="text-2xl font-bold mb-4 text-primary ml-8">Order History</h3>
           <div className="p-6">
