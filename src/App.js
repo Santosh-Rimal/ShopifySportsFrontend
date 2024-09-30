@@ -18,6 +18,10 @@ import UserProfile from './Components/product/Userprofile';
 import EditProfile from './Components/product/Editprofile';
 import Settings from './Components/product/Setting';
 import Register from './Components/Login/Signup';
+import Epay from './Components/product/epay';
+import Success from './Components/product/Success';
+import Failure from './Components/product/Failure';
+import SearchResults from './Components/product/SearchResults'
 function App() {
   const [email, setEmail] = useState(null);
   const [isLoginVisible, setIsLoginVisible] = useState(false);
@@ -37,7 +41,6 @@ function App() {
           <Route path='/product' element={<Product />} />
           <Route path='/about' element={<AboutUsPage/>} />
           <Route path='/contact' element={<ContactUsPage/>} />
-
           <Route path='/category' element={<Categories />} />
           <Route path='/product/:productId' element={<SingleProduct />} />
           <Route path='/usercart' element={<UserCart/>} />
@@ -47,6 +50,12 @@ function App() {
           <Route path='/userprofile' element={<UserProfile />} />
           <Route path='/editprofile' element={<EditProfile />} />
           <Route path='/setting' element={<Settings/>} />
+          <Route path='/setting' element={<Settings/>} />
+          <Route path='/epay' element={<Epay/>} />
+          <Route path='/success' element={<Success/>} />
+          <Route path='/failure' element={<Failure/>} />
+          <Route path='/search-results' element={<SearchResults/>} />
+         
 
 
 

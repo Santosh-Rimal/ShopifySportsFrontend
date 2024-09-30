@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
 import { MdKeyboardArrowRight } from 'react-icons/md';
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const CheckoutPage = () => {
   const [provinces, setProvinces] = useState([]); // List of provinces
@@ -16,6 +18,7 @@ const CheckoutPage = () => {
   const [streetAddress, setStreetAddress] = useState(''); // Street Address
 
   const location = useLocation();
+  const navigate = useNavigate(); // Create navigate function
   const { cart = { products: [] } } = location.state || {}; // Ensure cart is an object with a products array
 
   // Fetch provinces from the API
@@ -112,7 +115,8 @@ const CheckoutPage = () => {
       if (response.ok) {
         // Handle successful order placement
         alert('Order placed successfully!');
-        // Clear cart or redirect user if needed
+        // Redirect to ePay page
+       navigate('/epay', { state: { invoice: orderData.invoice } });
       } else {
         // Handle errors
         alert(result.message || 'Error placing order');

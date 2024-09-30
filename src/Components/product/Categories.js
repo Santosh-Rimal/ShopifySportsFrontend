@@ -46,7 +46,7 @@ const Categories = (props) => {
                   className={`relative grid select-none items-center whitespace-nowrap rounded-lg border-gray-900 py-1.5 px-3 font-sans text-xs font-bold uppercase text-gray-700`}
                 >
                   <span className="text-gray-500 hover:bg-slate-200 p-1 rounded-lg" onClick={() => filterCategory(category)}>
-                    {category.category}
+                    {category.name}
                   </span>
                 </div>
               ))}
