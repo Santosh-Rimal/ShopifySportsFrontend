@@ -1,0 +1,7 @@
+INSTRUCTIONS TO RUN THE PROJECTS:
+1.Install node.js and npm(Node package manager)
+2.Use following defaults credintials for login:
+     username: "kminchelle"
+     password: "0lelplR"
+3. Click sign in button
+4.also install taildwind css, react-router-dom, recharts for piechart.
