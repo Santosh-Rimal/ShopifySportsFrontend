@@ -83,7 +83,7 @@ useEffect(() => {
         onSubmit={handleSubmit}
       >
         <input
-          type="text"
+          type="hidden"
           id="amount"
           name="amount"
           value={amount}
@@ -91,7 +91,7 @@ useEffect(() => {
           required
         />
         <input
-          type="text"
+          type="hidden"
           id="tax_amount"
           name="tax_amount"
           value={taxAmount}
@@ -99,7 +99,7 @@ useEffect(() => {
           required
         />
         <input
-          type="text"
+          type="hidden"
           id="total_amount"
           name="total_amount"
           value={totalAmount}
@@ -107,7 +107,7 @@ useEffect(() => {
           required
         />
         <input
-          type="text"
+          type="hidden"
           id="transaction_uuid"
           name="transaction_uuid"
           value={transactionUUID}
@@ -115,7 +115,7 @@ useEffect(() => {
           required
         />
         <input
-          type="text"
+          type="hidden"
           id="product_code"
           name="product_code"
           value={productCode}
@@ -123,7 +123,7 @@ useEffect(() => {
           required
         />
         <input
-          type="text"
+          type="hidden"
           id="product_service_charge"
           name="product_service_charge"
           value={productServiceCharge}
@@ -131,7 +131,7 @@ useEffect(() => {
           required
         />
         <input
-          type="text"
+          type="hidden"
           id="product_delivery_charge"
           name="product_delivery_charge"
           value={productDeliveryCharge}
@@ -139,7 +139,7 @@ useEffect(() => {
           required
         />
         <input
-          type="text"
+          type="hidden"
           id="success_url"
           name="success_url"
           value={successUrl}
@@ -147,7 +147,7 @@ useEffect(() => {
           required
         />
         <input
-          type="text"
+          type="hidden"
           id="failure_url"
           name="failure_url"
           value={failureUrl}
@@ -155,7 +155,7 @@ useEffect(() => {
           required
         />
         <input
-          type="text"
+          type="hidden"
           id="signed_field_names"
           name="signed_field_names"
           value={signedFieldNames}
@@ -163,7 +163,7 @@ useEffect(() => {
           required
         />
         <input
-          type="text"
+          type="hidden"
           id="signature"
           name="signature"
           value={signature}

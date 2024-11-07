@@ -15,7 +15,7 @@ const Failure = () => {
         <h1 className="text-2xl font-bold mb-4 text-red-600">Payment Failed!</h1>
         <p className="text-lg mb-4">{errorMessage}</p>
         <div className="mt-4">
-          <Link to="/home" className="text-white bg-blue-500 hover:bg-blue-700 rounded px-4 py-2">
+          <Link to="/" className="text-white bg-blue-500 hover:bg-blue-700 rounded px-4 py-2">
             Back to Home
           </Link>
         </div>

@@ -90,7 +90,7 @@ const Success = () => {
         {loading && <p className="text-blue-500">Updating order status...</p>}
         {error && <p className="text-red-500">{error}</p>}
         <div className="mt-4">
-          <Link to="/home" className="text-white bg-blue-500 hover:bg-blue-700 rounded px-4 py-2">
+          <Link to="/" className="text-white bg-blue-500 hover:bg-blue-700 rounded px-4 py-2">
             Back to Home
           </Link>
         </div>

@@ -4,6 +4,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 
 const UserCart = () => {
+
+    const [cartItemCount, setCartItemCount] = useState(0);
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -24,39 +26,53 @@ const UserCart = () => {
         }
     };
 
-    const updateCart = async (id, newQuantity) => {
-        try {
-            const response = await fetch(`http://127.0.0.1:8000/api/updatecart/${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ user_id: userId, quantity: newQuantity }),
-            });
-            const data = await response.json();
-            if (!data.error) {
-                fetchCart();
-            }
-        } catch (error) {
-            console.error("Error updating cart:", error);
-            setError("Failed to update cart item.");
+   const updateCart = async (id, newQuantity) => {
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/api/updatecart/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: userId, quantity: newQuantity }),
+        });
+        const data = await response.json();
+        if (!data.error) {
+            fetchCart(); // Fetch the updated cart items
+            // Update local storage cart item count
+            const updatedCart = await fetch(`http://127.0.0.1:8000/api/single-user-cart/${userId}`);
+            const updatedCartData = await updatedCart.json();
+            const itemCount = updatedCartData.data ? updatedCartData.data.length : 0;
+            localStorage.setItem("cartItemCount", itemCount); // Save updated count to local storage
+            setCartItemCount(itemCount); // Update state
         }
-    };
+    } catch (error) {
+        console.error("Error updating cart:", error);
+        setError("Failed to update cart item.");
+    }
+};
+
 
     const deleteCartItem = async (id) => {
-        try {
-            const response = await fetch(`http://127.0.0.1:8000/api/deletecarts/${id}`, {
-                method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ user_id: userId }),
-            });
-            const data = await response.json();
-            if (!data.error) {
-                fetchCart();
-            }
-        } catch (error) {
-            console.error("Error deleting cart item:", error);
-            setError("Failed to delete cart item.");
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/api/deletecarts/${id}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: userId }),
+        });
+        const data = await response.json();
+        if (!data.error) {
+            fetchCart(); // Fetch the updated cart items
+            // Update local storage cart item count
+            const updatedCart = await fetch(`http://127.0.0.1:8000/api/single-user-cart/${userId}`);
+            const updatedCartData = await updatedCart.json();
+            const itemCount = updatedCartData.data ? updatedCartData.data.length : 0;
+            localStorage.setItem("cartItemCount", itemCount); // Save updated count to local storage
+            setCartItemCount(itemCount); // Update state
         }
-    };
+    } catch (error) {
+        console.error("Error deleting cart item:", error);
+        setError("Failed to delete cart item.");
+    }
+};
+
 
     const handleQuantityChange = (cartId, newQuantity) => {
         updateCart(cartId, newQuantity);
